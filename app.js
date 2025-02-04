@@ -1,0 +1,115 @@
+// // //
+
+const path = require("path"); // ⏺ imports Node.js’s Path module to work with file and folder paths easily
+const express = require("express");
+const morgan = require("morgan");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const cookieParser = require("cookie-parser");
+
+const AppError = require("./utility/appError");
+const globalErrorHandler = require("./controllers/errorController");
+const tourRouter = require("./routes/tourRoutes");
+const userRouter = require("./routes/userRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
+const bookingRouter = require("./routes/bookingRoutes");
+const viewRouter = require("./routes/viewRoutes");
+
+const app = express();
+
+// SETUP FOR PUG ✅ ✅ ✅
+app.set("view engine", "pug"); // ⏺ tells Express to use Pug for rendering HTML views
+app.set("views", path.join(__dirname, "views")); // ⏺ tells Express to find view files in the “views” folder inside the current folder
+// ⛔️ ⛔️ ⛔️
+
+// GLOBAL MIDDLEWARE ✅ ✅ ✅
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(helmet());
+
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
+
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP. Please try again in an hour!",
+});
+app.use("/api", limiter);
+
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" })); // ⏺ urlencoded() is an Express middleware that parses `form` data from HTML `forms` into req.body. extended: true means it's allow to send complex data (like objects or arrays)
+app.use(cookieParser());
+
+app.use(mongoSanitize());
+app.use(xss());
+
+app.use(
+  hpp({
+    whitelist: [
+      "duration",
+      "ratingsQuantity",
+      "ratingsAverage",
+      "maxGroupSize",
+      "difficulty",
+      "price",
+    ],
+  })
+);
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  // console.log(req.headers);
+  next();
+});
+// ⛔️ ⛔️ ⛔️
+
+// Set Content Security Policy
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      scriptSrc: [
+        "'self'",
+        "https://unpkg.com",
+        "https://cdnjs.cloudflare.com",
+      ],
+    },
+  })
+);
+
+// FOR FU**ING SECURITY ✅ ✅ ✅
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "script-src 'self' https://js.stripe.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.js https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js;"
+  );
+  next();
+});
+// ⛔️ ⛔️ ⛔️
+
+// MOUNTING ROUTERS ✅ ✅ ✅
+app.use("/", viewRouter);
+
+// ⏺ API
+app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRouter);
+// ⛔️ ⛔️ ⛔️
+
+app.all("*", (req, res, next) => {
+  // ⏺ create an error ⛔️
+  next(new AppError(`Can't find ${req.originalUrl} on the server!`, 404));
+});
+
+// ⏺ GLOBAL ERROR HANDLING MIDDLEWARE EXPRESS
+app.use(globalErrorHandler);
+// ⛔️ ⛔️ ⛔️
+
+module.exports = app;
+
+// console.log(Y);

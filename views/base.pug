@@ -1,0 +1,40 @@
+//- 
+doctype html
+html
+  head
+    block head
+      meta(charset="UTF-8")
+      meta(name="viewport" content="width=device-width, initial-scale=1.0")
+      link(rel="stylesheet", href="/css/style.css")
+      link(rel="shortcut icon", href="/img/favicon.png", type="image/x-icon")
+      title Natours | #{title}
+
+  body
+    //- h1=tour 
+    //- h2=user.toUpperCase()
+    //- - const x = 9
+    //- h2=2*x
+    //- p This is just some text
+    // HEADER
+    include _header 
+    //- ⏺ here parent(base) include child(_header)
+
+    // CONTENT
+    //- section.overview
+    //-   h1=tour
+    block content
+      h1 This is a placeholder heading
+
+    // FOOTER
+    include _footer
+
+    // INCLUDING LEAFLET
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="")
+    script(src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="")
+
+    // RUN SCRIPT TO LOAD MAP
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js")
+    //- script(src='/js/leaflet.js')  
+    //- script(src='/js/login.js')  
+    script(src="https://js.stripe.com/v3/")
+    script(src='/js/bundle.js')  
