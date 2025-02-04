@@ -54,7 +54,7 @@ const filterObj = (obj, ...allowedFields) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
 
-  console.log(newObj);
+  // console.log(newObj);
   return newObj;
 };
 

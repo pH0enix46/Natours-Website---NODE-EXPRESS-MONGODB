@@ -9,6 +9,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
+const compression = require("compression"); // compression is a middleware in Node.js that compresses HTTP responses to reduce the size of data sent to clients, improving performance and loading speed
 
 const AppError = require("./utility/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(helmet());
 
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 const limiter = rateLimit({
@@ -60,6 +61,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
