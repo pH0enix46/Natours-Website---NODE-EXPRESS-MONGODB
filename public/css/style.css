@@ -1415,121 +1415,128 @@ body {
   border-radius: 1.2rem;
 }
 
-/* Mobile responsive */
-/* @media screen and (max-width: 767px) {
+/* Tablet responsive (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+  /* Header */
   .header {
     flex-wrap: wrap;
     padding: 0 20px;
-    flex-direction: row !important;
     align-items: center;
+    justify-content: space-between;
   }
 
   .header__logo {
-    margin: 0;
+    margin: 10px 0;
   }
 
-  .nav--tours {
-    display: none;
+  .header__logo img {
+    height: 3rem;
+  }
+
+  .nav__el--cta {
+    padding: 0.5rem 2rem;
+  }
+  .nav__el:not(:last-child) {
+    margin-right: 1rem;
   }
 
   .nav--user {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    flex: auto;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 1rem;
   }
 
   .nav--user a {
-    margin: 0 !important;
+    margin: 0;
   }
 
+  /* Main content */
   .main {
-    padding: 60px 20px;
+    padding: 35px 20px;
   }
 
+  /* Card container */
   .card-container {
     max-width: 100%;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
+  /* Form containers */
   .login-form,
   .signup-form {
-    padding: 60px 30px;
+    padding: 40px 20px;
   }
 
+  /* Alerts */
   .alert {
     font-size: 14px;
-    padding: 24px 16px;
+    padding: 12px;
     width: 90%;
   }
 
+  /* User view */
   .user-view {
     flex-direction: column;
   }
 
   .user-view__content {
-    padding: 60px 30px;
+    padding: 40px 20px;
   }
 
   .user-view__form-container {
     padding: 0;
   }
 
+  /* Section headers */
   .section-header {
-    height: 400px;
+    height: 350px;
   }
 
   .heading-box {
     width: 100%;
     padding: 0 20px;
-    top: 40%;
+    top: 25%;
   }
 
   .heading-primary {
     width: 100%;
-    font-size: 40px;
+    font-size: 24px;
+    margin-top: 4rem;
   }
 
+  /* Section description */
   .section-description {
     flex-direction: column;
   }
 
+  /* Overview box */
   .overview-box {
-    padding: 80px 20px 60px 20px;
-    justify-content: flex-start;
+    padding: 50px 20px 40px 20px;
   }
 
+  .overview-box__group:not(:last-child) {
+    margin-top: 3rem;
+  }
+
+  /* Description box */
   .description-box {
-    padding: 60px 20px 80px 20px;
+    padding: 40px 20px 60px 20px;
   }
 
+  /* Section pictures */
   .section-pictures {
     flex-direction: column;
   }
 
-  .picture-box__img--1,
-  .picture-box__img--2,
-  .picture-box__img--3 {
-    padding: 0;
-  }
-
-  .reviews {
-    grid-column-gap: 30px;
-  }
-
-  .reviews:before,
-  .reviews:after {
-    width: 0;
-  }
-
+  /* Section CTA */
   .section-cta {
-    padding: 120px 20px 60px 20px;
+    padding: 80px 20px 40px 20px;
   }
 
   .cta {
-    padding: 30px;
+    padding: 20px;
   }
 
   .cta__img {
@@ -1539,7 +1546,211 @@ body {
   .cta__content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     align-items: flex-start;
   }
-} */
+
+  /* Footer */
+  .footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 6rem;
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+  }
+
+  .heading-box__detail {
+    font-size: 1.4rem;
+  }
+
+  .heading-secondary {
+    font-size: 2.2rem;
+  }
+
+  .description-box .description__text {
+    font-size: 1.6rem;
+  }
+
+  .btn,
+  .btn:link,
+  .btn:visited {
+    font-size: 1.6rem;
+    padding: 1.2rem 1.6rem;
+  }
+}
+
+/* Mobile responsive (max-width: 425px) */
+@media screen and (max-width: 425px) {
+  /* Header */
+  .header {
+    flex-wrap: wrap;
+    padding: 0 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__logo {
+    margin: 10px 0;
+  }
+
+  .header__logo img {
+    height: 2.8rem;
+  }
+
+  .nav__el--cta {
+    padding: 0.4rem 1.6rem;
+  }
+  .nav__el:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  .nav--user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .nav--user a {
+    margin: 0;
+  }
+
+  /* Main content */
+  .main {
+    padding: 25px 10px;
+  }
+
+  /* Card container */
+  .card-container {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Form containers */
+  .login-form,
+  .signup-form {
+    padding: 35px 15px;
+  }
+
+  /* Alerts */
+  .alert {
+    font-size: 12px;
+    padding: 10px;
+    width: 90%;
+  }
+
+  /* User view */
+  .user-view {
+    flex-direction: column;
+  }
+
+  .user-view__content {
+    padding: 30px 10px;
+  }
+
+  .user-view__form-container {
+    padding: 0;
+  }
+
+  /* Section headers */
+  .section-header {
+    height: 300px;
+  }
+
+  .heading-box {
+    width: 100%;
+    padding: 0 8px;
+    top: 30%;
+  }
+
+  .heading-primary {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 6rem;
+  }
+
+  /* Section description */
+  .section-description {
+    flex-direction: column;
+  }
+
+  /* Overview box */
+  .overview-box {
+    padding: 40px 10px 30px 10px;
+  }
+
+  .overview-box__group:not(:last-child) {
+    margin-top: 4rem;
+  }
+
+  /* Description box */
+  .description-box {
+    padding: 30px 10px 50px 10px;
+  }
+
+  /* Section pictures */
+  .section-pictures {
+    flex-direction: column;
+  }
+
+  /* Section CTA */
+  .section-cta {
+    padding: 60px 10px 30px 10px;
+  }
+
+  .cta {
+    padding: 20px;
+  }
+
+  .cta__img {
+    display: none;
+  }
+
+  .cta__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 4rem;
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+  }
+
+  .heading-box__detail {
+    font-size: 1.2rem;
+  }
+
+  .heading-secondary {
+    font-size: 2rem;
+  }
+
+  .description-box .description__text {
+    font-size: 1.4rem;
+  }
+
+  .btn,
+  .btn:link,
+  .btn:visited {
+    font-size: 1.4rem;
+    padding: 1rem 1.4rem;
+  }
+}
