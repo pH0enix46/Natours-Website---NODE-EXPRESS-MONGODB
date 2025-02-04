@@ -52,6 +52,7 @@ const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: "Too many requests from this IP. Please try again in an hour!",
+  keyGenerator: (req) => req.ip, // Ensures rate-limiting uses the real IP
 });
 app.use("/api", limiter);
 
