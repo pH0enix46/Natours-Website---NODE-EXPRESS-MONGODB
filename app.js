@@ -22,8 +22,6 @@ const viewRouter = require("./routes/viewRoutes");
 
 const app = express();
 
-app.enable("trust proxy"); // ⏺ on platforms like Railway to ensure your app correctly handles secure requests when it’s behind a proxy
-
 // SETUP FOR PUG ✅ ✅ ✅
 app.set("view engine", "pug"); // ⏺ tells Express to use Pug for rendering HTML views
 app.set("views", path.join(__dirname, "views")); // ⏺ tells Express to find view files in the “views” folder inside the current folder
