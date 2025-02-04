@@ -23,7 +23,7 @@ const signToken = (id) => {
   );
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
@@ -31,9 +31,10 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https", // ⏺ req.secure is a property in Express.js that checks if the request is being made over HTTPS. It returns true if the connection is secure (HTTPS) and false if it’s not (HTTP). req.headers["x-forwarded-proto"] === "https" checks if the request was made using HTTPS by looking at the proxy header
   };
 
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  // if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
 
@@ -63,7 +64,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   // console.log(url);
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, res); // ⏺ 201 for created
+  createSendToken(newUser, 201, req, res); // ⏺ 201 for created
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -81,7 +82,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Incorrect email or password!", 401));
 
   // ⏺ 3) check if everything is ok then send token to client
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res) => {
@@ -234,7 +235,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // ⏺ 3) update updateChangedAt property for the user
 
   // ⏺ 4) log the user in, send JWT to the client
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -251,7 +252,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // ⏺ 4) log user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 // ⏺ user jokhon login thakbe se kintu protect function er control e thakbe. puro whole system real life logic e cinta korbo
