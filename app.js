@@ -18,6 +18,7 @@ const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const bookingRouter = require("./routes/bookingRoutes");
+const bookingController = require("./controllers/bookingController");
 const viewRouter = require("./routes/viewRoutes");
 
 const app = express();
@@ -55,6 +56,13 @@ const limiter = rateLimit({
   keyGenerator: (req) => req.ip, // Ensures rate-limiting uses the real IP
 });
 app.use("/api", limiter);
+
+// webhooks
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }), // raw() parses raw request body (Buffer) without modifying it, useful for Stripe webhooks
+  bookingController.webhookCheckout
+);
 
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" })); // ⏺ urlencoded() is an Express middleware that parses `form` data from HTML `forms` into req.body. extended: true means it's allow to send complex data (like objects or arrays)
