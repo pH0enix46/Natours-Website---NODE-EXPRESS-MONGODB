@@ -5,6 +5,7 @@ import { displayMap } from "./leaflet";
 import { login, logout, signup } from "./auth";
 import { updateSettings } from "./updateSettings";
 import { bookTour } from "./stripe";
+import { showAlert } from "./alerts";
 
 // ⏺ ALL DOM ELEMENT
 const mapElement = document.getElementById("map");
@@ -14,6 +15,7 @@ const userDataForm = document.querySelector(".form-user-data");
 const userPasswordForm = document.querySelector(".form-user-password");
 const signupForm = document.querySelector(".form--signup");
 const bookBtn = document.getElementById("book-tour");
+const alertMessage = document.querySelector("body").dataset.alert;
 
 // ⏺ MAP
 if (mapElement) {
@@ -90,3 +92,6 @@ if (bookBtn)
     const { tourId } = e.target.dataset;
     bookTour(tourId);
   });
+
+// ⏺ ALERT
+if (alert) showAlert("success", alertMessage, 10);

@@ -9,7 +9,7 @@ html
       link(rel="shortcut icon", href="/img/favicon.png", type="image/x-icon")
       title Natours | #{title}
 
-  body
+  body(data-alert=`${alert ? alert : ""}`)
     //- h1=tour 
     //- h2=user.toUpperCase()
     //- - const x = 9
