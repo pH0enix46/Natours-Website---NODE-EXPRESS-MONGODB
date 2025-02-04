@@ -10,6 +10,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression"); // compression is a middleware in Node.js that compresses HTTP responses to reduce the size of data sent to clients, improving performance and loading speed
+const cors = require("cors"); // CORS(Cross-Origin Resource Sharing) is a security feature that controls how web pages can make requests to other websites to protect against harmful activities. I mean other can easily use our api
 
 const AppError = require("./utility/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -29,6 +30,16 @@ app.set("views", path.join(__dirname, "views")); // ⏺ tells Express to find vi
 // ⛔️ ⛔️ ⛔️
 
 // GLOBAL MIDDLEWARE ✅ ✅ ✅
+app.use(cors()); // for real API, allowing requests from any domain to access our API
+// app.use(
+//   cors({
+//     origin: "https://www.natours.com",
+//   })
+// );
+
+app.options("*", cors()); // options() is used to handle HTTP OPTIONS (GET, POST, etc) requests, typically for CORS pre-flight checks, to specify allowed methods and headers for a resource. * measn all the route
+// app.options("/api/v1/tours/:id", cors()); // specific for this routes
+
 // app.use(express.static(`${__dirname}/public`));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -100,6 +111,7 @@ app.use((req, res, next) => {
 app.use("/", viewRouter);
 
 // ⏺ API
+// app.use("/api/v1/tours", cors(), tourRouter); // specefic routes for cors
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
