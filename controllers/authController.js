@@ -34,6 +34,7 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  // if (req.secure) cookieOptions.secure = true; // ⏺ req.secure is a property in Express.js that checks if the request is being made over HTTPS. It returns true if the connection is secure (HTTPS) and false if it’s not (HTTP)
 
   res.cookie("jwt", token, cookieOptions);
 

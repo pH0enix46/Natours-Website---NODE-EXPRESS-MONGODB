@@ -33,4 +33,10 @@ process.on("unhandledRejection", (err) => {
   });
 });
 
-// console.log(x);
+// ⏺ it allows your app to clean up and shut down gracefully when it receives a termination signal (SIGTERM)
+process.on("SIGTERM", () => {
+  console.log("SIGTERM RECEIVED!! Shutting downd gracefully");
+  server.close(() => {
+    console.log("Process terminated!");
+  });
+});
